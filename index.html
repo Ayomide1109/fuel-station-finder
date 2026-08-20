@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Fuel Station Finder</title>
+
+    <!-- Leaflet CSS -->
+    <link
+        rel="stylesheet"
+        href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+    >
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <!-- ================= HEADER ================= -->
+
+    <header class="header">
+
+        <div class="container nav">
+
+            <div class="logo">
+                ⛽ FuelFinder
+            </div>
+
+            <button id="darkModeBtn" class="dark-btn">
+                🌙
+            </button>
+
+        </div>
+
+        <div class="hero container">
+
+            <h1>Find Fuel Stations Near You</h1>
+
+            <p>
+                Find fuel stations, compare prices and report
+                current fuel prices in your area.
+            </p>
+
+        </div>
+
+    </header>
+
+
+    <!-- ================= CONTROLS ================= -->
+
+    <main>
+
+        <section class="controls-section container">
+
+            <div class="search-box">
+
+                <input
+                    type="search"
+                    id="searchInput"
+                    placeholder="Search station or location..."
+                >
+
+            </div>
+
+
+            <select id="fuelFilter">
+
+                <option value="all">All Fuel Types</option>
+
+                <option value="Petrol">
+                    Petrol
+                </option>
+
+                <option value="Diesel">
+                    Diesel
+                </option>
+
+                <option value="Kerosene">
+                    Kerosene
+                </option>
+                <button id="myLocationBtn" class="secondary-btn">
+    📍 My Location
+</button>
+
+            </select>
+
+
+            <button id="resetBtn" class="secondary-btn">
+                Reset
+            </button>
+
+            <button id="myLocationBtn" class="secondary-btn">
+    📍 My Location
+</button>
+
+        </section>
+
+
+        <!-- ================= SUMMARY ================= -->
+
+        <section class="summary container">
+
+            <div class="summary-card">
+
+                <span>Total Stations</span>
+
+                <strong id="stationCount">
+                    0
+                </strong>
+
+            </div>
+
+
+            <div class="summary-card">
+
+                <span>Cheapest Price</span>
+
+                <strong id="cheapestPrice">
+                    ₦0
+                </strong>
+
+            </div>
+
+
+            <div class="summary-card">
+
+                <span>Fuel Type</span>
+
+                <strong id="selectedFuel">
+                    All
+                </strong>
+
+            </div>
+
+        </section>
+
+
+        <!-- ================= MAP ================= -->
+
+        <section class="map-section container">
+
+            <div class="section-title">
+
+                <h2>Fuel Station Map</h2>
+
+                <p>
+                    Select a marker to view station information.
+                </p>
+
+            </div>
+
+            <div id="map"></div>
+
+        </section>
+
+
+        <!-- ================= STATIONS ================= -->
+
+        <section class="stations-section container">
+
+            <div class="section-title">
+
+                <h2>Available Stations</h2>
+
+                <p>
+                    Browse fuel stations and compare prices.
+                </p>
+
+            </div>
+
+
+            <div
+                id="stationList"
+                class="station-list"
+            ></div>
+
+        </section>
+
+
+        <!-- ================= REPORT ================= -->
+
+        <section class="report-section container">
+
+        <div class="report-container">
+
+        <div class="section-title">
+
+                    <h2>Report Fuel Price</h2>
+
+                    <p>
+                        Help other drivers by reporting
+                        the latest fuel price.
+                    </p>
+
+                </div>
+
+
+                <form id="reportForm">
+
+                    <div class="form-group">
+
+                        <label for="stationName">
+                            Station Name
+                        </label>
+
+                        <input
+                            type="text"
+                            id="stationName"
+                            placeholder="e.g. NNPC"
+                            required
+                        >
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label for="location">
+                            Location
+                        </label>
+
+                        <div class="location-input">
+    <input
+        type="text"
+        id="location"
+        placeholder="e.g. Tanke, Ilorin"
+        required
+    >
+
+    <button type="button" id="findLocationBtn">
+        📍 Find Location
+    </button>
+</div>
+
+<p id="locationStatus" class="location-status"></p>
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label for="fuelType">
+                            Fuel Type
+                        </label>
+
+                        <select id="fuelType">
+
+                            <option value="Petrol">
+                                Petrol
+                            </option>
+
+                            <option value="Diesel">
+                                Diesel
+                            </option>
+
+                            <option value="Kerosene">
+                                Kerosene
+                            </option>
+
+                        </select>
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label for="price">
+                            Price per litre (₦)
+                        </label>
+
+                        <input
+                            type="number"
+                            id="price"
+                            placeholder="e.g. 895"
+                            min="1"
+                            required
+                        >
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label for="availability">
+                            Availability
+                        </label>
+
+                        <select id="availability">
+
+                            <option value="Available">
+                                Available
+                            </option>
+
+                            <option value="Low Stock">
+                                Low Stock
+                            </option>
+
+                            <option value="Out of Stock">
+                                Out of Stock
+                            </option>
+
+                        </select>
+
+                    </div>
+
+
+                    <button
+                        type="submit"
+                        class="primary-btn"
+                    >
+                        Submit Price Report
+                    </button>
+
+                </form>
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+    <!-- ================= FOOTER ================= -->
+
+    <footer>
+
+        <div class="container">
+
+            <h3>⛽ FuelFinder</h3>
+
+            <p>
+                Helping Nigerian drivers find fuel
+                and compare prices.
+            </p>
+
+            <p class="copyright">
+                © 2026 FuelFinder. Built for easier fuel discovery.
+            </p>
+
+        </div>
+
+    </footer>
+
+
+    <!-- Leaflet JavaScript -->
+
+    <script
+        src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js">
+    </script>
+
+
+    <script src="script.js"></script>
+
+</body>
+</html>
